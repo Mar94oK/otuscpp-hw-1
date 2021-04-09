@@ -1,7 +1,19 @@
 #include <iostream>
+#include <version.h>
+#include <BuildNumber.h>
 
-int main()
-{
-  std::cout << "Hello, OTUS-World!" << std::endl;
-  return 0;
-}
+using namespace MyHomework;
+
+	int main()
+	{
+
+	  BuildNumber bn(HomeWorkMajorNumber, HomeWorkMinorNumber, HomeWorkBuildNumber, BuildTime);
+
+	  std::cout << "Build Number: " << bn;
+	  std::cout << "Hello, OTUS-World!" << std::endl;
+
+
+	  return 0;
+	}
+
+
