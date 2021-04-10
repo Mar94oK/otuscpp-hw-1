@@ -9,9 +9,8 @@ using namespace MyHomework;
 
 	  BuildNumber bn(HomeWorkMajorNumber, HomeWorkMinorNumber, HomeWorkBuildNumber, BuildTime);
 
-	  std::cout << "Build Number: " << bn;
+	  std::cout << "build " << bn;
 	  std::cout << "Hello, OTUS-World!" << std::endl;
-
 
 	  return 0;
 	}
