@@ -18,7 +18,7 @@ set(HOMEWORK_MINOR_NUMBER ${CMAKE_MATCH_1})
 
 set(HOMEWORK_MINOR_NUMBER ${CMAKE_MATCH_1})
 
-if (GITHUB_RUN_ID)
+if (GITHUB_RUN_NUMBER)
     message(STATUS "Built system is GitActions!")
     set(HOMEWORK_BUILD_NUMBER ${GITHUB_RUN_NUMBER})
 else()
@@ -26,7 +26,8 @@ else()
     set(HOMEWORK_BUILD_NUMBER ${CMAKE_MATCH_1})
 endif()
 
-message(STATUS "Minor Number: ${HOMEWORK_MINOR_NUMBER}")
+message(STATUS "GitHub RUN ID: ${GITHUB_RUN_NUMBER}")
+message(STATUS "Build Number: ${HOMEWORK_BUILD_NUMBER}")
 
 configure_file(${CMAKE_CURRENT_SOURCE_DIR}/version.cpp.in ${CMAKE_CURRENT_SOURCE_DIR}/version.cpp)
 
