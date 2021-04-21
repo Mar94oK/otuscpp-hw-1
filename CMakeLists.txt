@@ -25,7 +25,6 @@ else()
     set(HOMEWORK_BUILD_NUMBER ${CMAKE_MATCH_1})
 endif()
 
-message(STATUS "GITHUB_RUN_NUMBER: ${GITHUB_RUN_NUMBER}")
 message(STATUS "Build Number: ${HOMEWORK_BUILD_NUMBER}")
 
 configure_file(${CMAKE_CURRENT_SOURCE_DIR}/version.cpp.in ${CMAKE_CURRENT_SOURCE_DIR}/version.cpp)
@@ -33,6 +32,17 @@ configure_file(${CMAKE_CURRENT_SOURCE_DIR}/version.cpp.in ${CMAKE_CURRENT_SOURCE
 add_executable(otuscpp_hw_1 main.cpp version.cpp version.h BuildNumber.h)
 target_include_directories(otuscpp_hw_1 PRIVATE ${CMAKE_SOURCE_DIR} )
 
+set(HW1_EXECUTION_TEST_TIMEOUT 1)
+
+enable_testing()
+
+add_test(ExecutionTest otuscpp_hw_1)
+
+set_tests_properties(ExecutionTest PROPERTIES TIMEOUT ${HW1_EXECUTION_TEST_TIMEOUT})
+
+set_tests_properties(ExecutionTest PROPERTIES
+        PASS_REGULAR_EXPRESSION "build [0-9]"
+        FAIL_REGULAR_EXPRESSION "Error!")
 
 
 
