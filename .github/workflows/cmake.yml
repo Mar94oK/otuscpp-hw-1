@@ -33,7 +33,9 @@ jobs:
       # The CMake binaries on the Github Actions machines are (as of this writing) 3.12
       run:  |
         cmake $GITHUB_WORKSPACE -DCMAKE_BUILD_TYPE=$BUILD_TYPE -DBUILD_NUMBER=$GITHUB_RUN_NUMBER
-        echo "Current Binary Version BINARY_VERSION':' ${{ env.BINARY_VERSION }}"
+        BINARY_VERSION=$(<"binary_version.txt")
+        echo "Current Binary Version BINARY_VERSION':' $BINARY_VERSION"
+        echo "BINARY_VERSION=$BINARY_VERSION" >> $GITHUB_ENV
 
     - name: Print Current Build Number
       run: echo "Current Build number':' $GITHUB_RUN_NUMBER"
