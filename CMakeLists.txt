@@ -36,7 +36,7 @@ set(HW1_EXECUTION_TEST_TIMEOUT 1)
 
 enable_testing()
 
-add_test(ExecutionTest otuscpp_hw_1)
+add_test(ExecutionTest helloworld)
 
 set_tests_properties(ExecutionTest PROPERTIES TIMEOUT ${HW1_EXECUTION_TEST_TIMEOUT})
 
