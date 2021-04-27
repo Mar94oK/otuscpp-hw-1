@@ -25,6 +25,12 @@ else()
     set(HOMEWORK_BUILD_NUMBER ${CMAKE_MATCH_1})
 endif()
 
+#Obviously, this is crutch. I don't know hot to make this more beautifull.
+#It is necessary to pass this environment variable to the post-build bash script.
+#But it is up to Cmake to define this value on the run...
+#What to do???
+set(ENV{BINARY_VERSION} ${HOMEWORK_MAJOR_NUMBER}_${HOMEWORK_MINOR_NUMBER}_${HOMEWORK_BUILD_NUMBER})
+
 message(STATUS "Build Number: ${HOMEWORK_BUILD_NUMBER}")
 
 configure_file(${CMAKE_CURRENT_SOURCE_DIR}/version.cpp.in ${CMAKE_CURRENT_SOURCE_DIR}/version.cpp)
