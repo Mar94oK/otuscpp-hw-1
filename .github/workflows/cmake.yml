@@ -36,7 +36,7 @@ jobs:
         cd ..
         ls -la
         BINARY_VERSION=$(<"binary_version.txt")
-#        echo "Current Binary Version BINARY_VERSION':' $BINARY_VERSION"
+        echo "Current Binary Version BINARY_VERSION':' $BINARY_VERSION"
         echo "BINARY_VERSION=$BINARY_VERSION" >> $GITHUB_ENV
 
     - name: Print Current Build Number
