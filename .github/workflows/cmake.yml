@@ -58,7 +58,7 @@ jobs:
         echo "Testing Post-Build"
         ls -la
         ls -la build/
-#        ./tools/makeDebPackage.sh --binary-name=
+        ./tools/makeDebPackage.sh --binary-name=helloworld --binary-version=${{ env.BINARY_VERSION }} --binary-path=build --install-path=.
 
     - name: Test
       working-directory: ${{github.workspace}}/build
