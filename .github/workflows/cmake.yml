@@ -39,7 +39,7 @@ jobs:
       run: echo "Current Build number':' $GITHUB_RUN_NUMBER"
 
     - name: Check BINARY_VERSION Defined by Cmake run. (Crutch!!!)
-      run: echo "Current Binary Version BINARY_VERSION':' ${{ env.BINARY_VERSION }}""
+      run: echo "Current Binary Version BINARY_VERSION':' ${{ env.BINARY_VERSION }}"
 
     - name: Build
       working-directory: ${{github.workspace}}/build
