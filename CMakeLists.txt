@@ -29,8 +29,8 @@ message(STATUS "Build Number: ${HOMEWORK_BUILD_NUMBER}")
 
 configure_file(${CMAKE_CURRENT_SOURCE_DIR}/version.cpp.in ${CMAKE_CURRENT_SOURCE_DIR}/version.cpp)
 
-add_executable(otuscpp_hw_1 main.cpp version.cpp version.h BuildNumber.h)
-target_include_directories(otuscpp_hw_1 PRIVATE ${CMAKE_SOURCE_DIR} )
+add_executable(helloworld main.cpp version.cpp version.h BuildNumber.h)
+target_include_directories(helloworld PRIVATE ${CMAKE_SOURCE_DIR} )
 
 set(HW1_EXECUTION_TEST_TIMEOUT 1)
 
