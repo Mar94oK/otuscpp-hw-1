@@ -30,6 +30,7 @@ endif()
 #But it is up to Cmake to define this value on the run...
 #What to do???
 set(ENV{BINARY_VERSION} ${HOMEWORK_MAJOR_NUMBER}_${HOMEWORK_MINOR_NUMBER}_${HOMEWORK_BUILD_NUMBER})
+message(STATUS "Binary Version:  $ENV{BINARY_VERSION} ")
 
 message(STATUS "Build Number: ${HOMEWORK_BUILD_NUMBER}")
 
