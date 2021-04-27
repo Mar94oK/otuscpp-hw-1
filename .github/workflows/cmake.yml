@@ -5,6 +5,7 @@ on: [push]
 env:
   # Customize the CMake build type here (Release, Debug, RelWithDebInfo, etc.)
   BUILD_TYPE: Release
+  TARGET_NAME: "helloworld"
 
 jobs:
   build:
@@ -30,16 +31,34 @@ jobs:
       # Note the current convention is to use the -S and -B options here to specify source 
       # and build directories, but this is only available with CMake 3.13 and higher.  
       # The CMake binaries on the Github Actions machines are (as of this writing) 3.12
-      run: cmake $GITHUB_WORKSPACE -DCMAKE_BUILD_TYPE=$BUILD_TYPE -DBUILD_NUMBER=$GITHUB_RUN_NUMBER
+      run:  |
+        cmake $GITHUB_WORKSPACE -DCMAKE_BUILD_TYPE=$BUILD_TYPE -DBUILD_NUMBER=$GITHUB_RUN_NUMBER -DTARGET_NAME=${{ env.TARGET_NAME }}
+        cd ..
+        ls -la
+        BINARY_VERSION=$(<"binary_version.txt")
+        echo "Current Binary Version BINARY_VERSION':' $BINARY_VERSION"
+        echo "BINARY_VERSION=$BINARY_VERSION" >> $GITHUB_ENV
 
     - name: Print Current Build Number
       run: echo "Current Build number':' $GITHUB_RUN_NUMBER"
+
+    - name: Check BINARY_VERSION Defined by Cmake run. (Crutch!!!)
+      run: echo "Current Binary Version BINARY_VERSION':' ${{ env.BINARY_VERSION }}"
 
     - name: Build
       working-directory: ${{github.workspace}}/build
       shell: bash
       # Execute the build.  You can specify a specific target with "--target <NAME>"
       run: cmake --build . --config $BUILD_TYPE
+
+    - name: PostBuild
+      working-directory: ${{github.workspace}}
+      shell: bash
+      run: |
+        echo "Testing Post-Build"
+        ls -la
+        ls -la build/
+        ./tools/makeDebPackage.sh --binary-name=${{ env.TARGET_NAME }} --binary-version=${{ env.BINARY_VERSION }} --binary-path=build --install-path=build
 
     - name: Test
       working-directory: ${{github.workspace}}/build
@@ -51,5 +70,7 @@ jobs:
     - name: Archive production artifacts
       uses: actions/upload-artifact@v2
       with:
-        name: try save artefcats
-        path: build
+        name: build-artefacts
+        path: |
+          build/${{ env.TARGET_NAME }}
+          ${{github.workspace}}/*.deb
