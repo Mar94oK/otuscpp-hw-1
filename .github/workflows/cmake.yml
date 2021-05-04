@@ -89,6 +89,14 @@ jobs:
         git status
         git push
 
+    - name: Exemining gpg system
+      working-directory: ${{github.workspace}}
+      shell: bash
+      run: |
+        echo "Testing gpg and GitHub Secrets."
+        which gpg
+        git config --list
+
 
     - name: Test
       working-directory: ${{github.workspace}}/build
