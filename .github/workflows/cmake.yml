@@ -60,6 +60,13 @@ jobs:
         ls -la build/
         ./tools/makeDebPackage.sh --binary-name=${{ env.TARGET_NAME }} --binary-version=${{ env.BINARY_VERSION }} --binary-path=build --install-path=build
 
+    - name: CommitingDebPackage
+      working-directory: ${{github.workspace}}
+      shell: bash
+      run: |
+        echo "Testing Commiting .deb package to Releases"
+        find build/ -name \*.deb -exec cp {} Releases/
+
     - name: Test
       working-directory: ${{github.workspace}}/build
       shell: bash
