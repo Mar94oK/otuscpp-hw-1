@@ -75,6 +75,10 @@ jobs:
       run: |
         echo "Testing git commands to commit new .Deb package to Releases"
         ls -la
+        git add Releases/*
+        git commit -m "Adding new debian package"
+        git status
+        git push
 
 
     - name: Test
