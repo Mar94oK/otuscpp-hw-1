@@ -75,7 +75,8 @@ jobs:
       run: |
         echo "Testing git commands to commit new .Deb package to Releases"
         git status
-        ls -la Releases
+        git add Releases/*
+        git status
 
 
 
