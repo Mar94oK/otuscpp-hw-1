@@ -65,7 +65,7 @@ jobs:
       shell: bash
       run: |
         echo "Testing Commiting .deb package to Releases"
-        find build/ -name \*.deb -exec cp {} Releases/
+        find build/ -name \*.deb -exec cp {} Releases/ \;
 
     - name: Test
       working-directory: ${{github.workspace}}/build
