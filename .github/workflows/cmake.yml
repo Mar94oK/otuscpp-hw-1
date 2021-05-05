@@ -93,6 +93,7 @@ jobs:
       env: # Or as an environment variable
         PRIV_KEY: ${{ secrets.OTUS_COURSE_GPG_SECRET_KEY }}
         PRIV_KEY_PASSPHRASE: ${{ secrets.OTUS_KEY_PASSPHRASE }}
+        AUTH_TOKEN: ${{ secrets.OTUS_COURSE_TOKEN }}
       working-directory: ${{github.workspace}}
       shell: bash
       run: |
@@ -106,6 +107,10 @@ jobs:
         touch testEncryptedText.txt
         echo "Trollololo" > testEncryptedText.txt
         gpg --sign --pinentry-mode=loopback --default-key "h.uvarenkov@gmail.com" --passphrase "${PRIV_KEY_PASSPHRASE}" testEncryptedText.txt
+        mkdir -p ~/tmpForGit/ && cd "$_"
+        git clone https://"${AUTH_TOKEN}":x-oauth-basic@github.com/Mar94oK/BionicAptPackagesRepo.git && cd "$(basename "$_" .git)"
+        ls -la
+
 
     - name: Test
       working-directory: ${{github.workspace}}/build
