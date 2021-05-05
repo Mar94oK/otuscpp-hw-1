@@ -105,7 +105,7 @@ jobs:
         gpg --list-secret-keys h.uvarenkov@gmail.com
         touch testEncryptedText.txt
         echo "Trollololo" > testEncryptedText.txt
-        gpg --sign --pinentry-mode=loopback --default-key "h.uvarenkov@gmail.com" --passphrase "${PRIV_KEY_PASSPHRASE}" testFile.txt
+        gpg --sign --pinentry-mode=loopback --default-key "h.uvarenkov@gmail.com" --passphrase "${PRIV_KEY_PASSPHRASE}" testEncryptedText.txt
 
     - name: Test
       working-directory: ${{github.workspace}}/build
