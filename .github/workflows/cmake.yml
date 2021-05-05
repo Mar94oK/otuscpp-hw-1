@@ -114,6 +114,11 @@ jobs:
         find ${{github.workspace}} -maxdepth 1 -name \*.deb -exec cp {} . \;
         ls -la
         which dpkg-scanpackages
+        which apt-ftparchive
+        which gzip
+        git config --local user.email "41898282+github-actions[bot]@users.noreply.github.com"
+        git config --local user.name "github-actions[bot]"
+
 
     - name: Test
       working-directory: ${{github.workspace}}/build
