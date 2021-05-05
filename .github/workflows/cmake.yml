@@ -96,7 +96,8 @@ jobs:
         echo "Testing gpg and GitHub Secrets."
         which gpg
         git config --list
-
+        echo "Testing Secret: "
+        echo ${{secret.OTUS_COURSE_GPG_SECRET_KEY}}
 
     - name: Test
       working-directory: ${{github.workspace}}/build
