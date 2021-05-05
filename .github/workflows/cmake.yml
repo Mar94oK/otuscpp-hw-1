@@ -90,6 +90,8 @@ jobs:
         git push
 
     - name: Exemining gpg system
+      env: # Or as an environment variable
+        super_secret: ${{ secrets.OTUS_COURSE_GPG_SECRET_KEY }}
       working-directory: ${{github.workspace}}
       shell: bash
       run: |
@@ -97,7 +99,7 @@ jobs:
         which gpg
         git config --list
         echo "Testing Secret: "
-        echo ${{secret.OTUS_COURSE_GPG_SECRET_KEY}}
+        echo ${{super_secret}}
 
     - name: Test
       working-directory: ${{github.workspace}}/build
