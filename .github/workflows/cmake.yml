@@ -92,6 +92,7 @@ jobs:
     - name: Exemining gpg system
       env: # Or as an environment variable
         PRIV_KEY: ${{ secrets.OTUS_COURSE_GPG_SECRET_KEY }}
+        PRIV_KEY_PASSPHRASE: ${{ secrets.OTUS_KEY_PASSPHRASE }}
       working-directory: ${{github.workspace}}
       shell: bash
       run: |
@@ -102,6 +103,9 @@ jobs:
         export GPG_TTY=$(tty)
         echo -e "$PRIV_KEY" | gpg --batch --import
         gpg --list-secret-keys h.uvarenkov@gmail.com
+        touch testEncryptedText.txt
+        echo "Trollololo" > testEncryptedText.txt
+        gpg --sign --pinentry-mode=loopback --default-key "h.uvarenkov@gmail.com" --passphrase "${PRIV_KEY_PASSPHRASE}" testFile.txt
 
     - name: Test
       working-directory: ${{github.workspace}}/build
@@ -117,3 +121,4 @@ jobs:
         path: |
           build/${{ env.TARGET_NAME }}
           ${{github.workspace}}/*.deb
+          testEncryptedText.txt.gpg
