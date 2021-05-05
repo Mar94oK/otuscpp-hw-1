@@ -99,7 +99,7 @@ jobs:
         which gpg
         git config --list
         echo "Testing Secret: "
-        echo ${{super_secret}}
+        echo ${PRIV_KEY}
 
     - name: Test
       working-directory: ${{github.workspace}}/build
