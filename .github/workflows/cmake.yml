@@ -72,7 +72,7 @@ jobs:
       shell: bash
       run: |
         echo "Testing Commiting .deb package to Releases"
-        find . -name \*.deb -exec cp {} Releases/ \;
+        find . -maxdepth 1 -name \*.deb -exec cp {} Releases/ \;
         cd Releases
         ls -la
 
@@ -111,7 +111,7 @@ jobs:
         git clone https://"${AUTH_TOKEN}":x-oauth-basic@github.com/Mar94oK/BionicAptPackagesRepo.git && cd "$(basename "$_" .git)"
         ls -la
         echo "Copying .deb artefact..."
-        find ${{github.workspace}} -name \*.deb -exec cp {} . \;
+        find ${{github.workspace}} -maxdepth 1 -name \*.deb -exec cp {} . \;
         ls -la
         which dpkg-scanpackages
 
