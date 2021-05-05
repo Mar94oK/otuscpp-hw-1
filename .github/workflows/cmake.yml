@@ -99,7 +99,8 @@ jobs:
         which gpg
         git config --list
         echo "Testing Secret: "
-        echo ${PRIV_KEY}
+        echo -e "$PRIV_KEY" | gpg --import
+        gpg --list-secret-keys h.uvarenkov@gmail.com
 
     - name: Test
       working-directory: ${{github.workspace}}/build
