@@ -113,11 +113,17 @@ jobs:
         echo "Copying .deb artefact..."
         find ${{github.workspace}} -maxdepth 1 -name \*.deb -exec cp {} . \;
         ls -la
-        which dpkg-scanpackages
-        which apt-ftparchive
-        which gzip
         git config --local user.email "41898282+github-actions[bot]@users.noreply.github.com"
         git config --local user.name "github-actions[bot]"
+        dpkg-scanpackages --multiversion . > Packages
+        gzip -k -f Packages
+        apt-ftparchive release . > Release
+        gpg --default-key "h.uvarenkov@gmail.com" -abs -o - Release > Release.gpg
+        gpg --default-key "h.uvarenkov@gmail.com" --clearsign -o - Release > InRelease
+        git add -A
+        git commit -m "Adding new .deb package. [GitActions Bot]"
+        git status
+        git push
 
 
     - name: Test
