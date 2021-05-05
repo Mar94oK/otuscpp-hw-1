@@ -110,7 +110,10 @@ jobs:
         mkdir -p ~/tmpForGit/ && cd "$_"
         git clone https://"${AUTH_TOKEN}":x-oauth-basic@github.com/Mar94oK/BionicAptPackagesRepo.git && cd "$(basename "$_" .git)"
         ls -la
-
+        echo "Copying .deb artefact..."
+        find ${{github.workspace}} -name \*.deb -exec cp {} .. \;
+        ls -la
+        which dpkg-scanpackages
 
     - name: Test
       working-directory: ${{github.workspace}}/build
