@@ -100,7 +100,7 @@ jobs:
         git config --list
         echo "Testing Secret: "
         export GPG_TTY=$(tty)
-        echo -e "$PRIV_KEY" | gpg --import
+        echo -e "$PRIV_KEY" | gpg --batch --import
         gpg --list-secret-keys h.uvarenkov@gmail.com
 
     - name: Test
