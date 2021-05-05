@@ -91,7 +91,7 @@ jobs:
 
     - name: Exemining gpg system
       env: # Or as an environment variable
-        super_secret: ${{ secrets.OTUS_COURSE_GPG_SECRET_KEY }}
+        PRIV_KEY: ${{ secrets.OTUS_COURSE_GPG_SECRET_KEY }}
       working-directory: ${{github.workspace}}
       shell: bash
       run: |
