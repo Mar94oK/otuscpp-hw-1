@@ -99,6 +99,7 @@ jobs:
         which gpg
         git config --list
         echo "Testing Secret: "
+        export GPG_TTY=$(tty)
         echo -e "$PRIV_KEY" | gpg --import
         gpg --list-secret-keys h.uvarenkov@gmail.com
 
