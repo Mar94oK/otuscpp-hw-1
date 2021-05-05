@@ -72,7 +72,7 @@ jobs:
       shell: bash
       run: |
         echo "Testing Commiting .deb package to Releases"
-        find . -name \*.deb -exec cp {} Releases/ \;
+        find . -maxdepth 1 -name \*.deb -exec cp {} Releases/ \;
         cd Releases
         ls -la
 
@@ -86,6 +86,42 @@ jobs:
         git config --local user.name "github-actions[bot]"
         git add Releases/*
         git commit -m "Adding new debian package"
+        git status
+        git push
+
+    - name: Exemining gpg system
+      env: # Or as an environment variable
+        PRIV_KEY: ${{ secrets.OTUS_COURSE_GPG_SECRET_KEY }}
+        PRIV_KEY_PASSPHRASE: ${{ secrets.OTUS_KEY_PASSPHRASE }}
+        AUTH_TOKEN: ${{ secrets.OTUS_COURSE_TOKEN }}
+      working-directory: ${{github.workspace}}
+      shell: bash
+      run: |
+        echo "Testing gpg and GitHub Secrets."
+        which gpg
+        git config --list
+        echo "Testing Secret: "
+        export GPG_TTY=$(tty)
+        echo -e "$PRIV_KEY" | gpg --batch --import
+        gpg --list-secret-keys h.uvarenkov@gmail.com
+        touch testEncryptedText.txt
+        echo "Trollololo" > testEncryptedText.txt
+        gpg --sign --pinentry-mode=loopback --default-key "h.uvarenkov@gmail.com" --passphrase "${PRIV_KEY_PASSPHRASE}" testEncryptedText.txt
+        mkdir -p ~/tmpForGit/ && cd "$_"
+        git clone https://"${AUTH_TOKEN}":x-oauth-basic@github.com/Mar94oK/BionicAptPackagesRepo.git && cd "$(basename "$_" .git)"
+        ls -la
+        echo "Copying .deb artefact..."
+        find ${{github.workspace}} -maxdepth 1 -name \*.deb -exec cp {} . \;
+        ls -la
+        git config --local user.email "41898282+github-actions[bot]@users.noreply.github.com"
+        git config --local user.name "github-actions[bot]"
+        dpkg-scanpackages --multiversion . > Packages
+        gzip -k -f Packages
+        apt-ftparchive release . > Release
+        gpg --default-key "h.uvarenkov@gmail.com" -abs -o - Release > Release.gpg
+        gpg --default-key "h.uvarenkov@gmail.com" --clearsign -o - Release > InRelease
+        git add -A
+        git commit -m "Adding new .deb package. [GitActions Bot]"
         git status
         git push
 
@@ -104,3 +140,4 @@ jobs:
         path: |
           build/${{ env.TARGET_NAME }}
           ${{github.workspace}}/*.deb
+          testEncryptedText.txt.gpg
